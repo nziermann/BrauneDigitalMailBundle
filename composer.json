@@ -15,11 +15,10 @@
     "require" : {
     },
     "autoload" : {
-        "psr-0" : {
-            "BrauneDigital\\MailBundle" : ""
+        "psr-4" : {
+            "BrauneDigital\\MailBundle\\" : ""
         }
     },
-    "target-dir" : "braune-digital/mail-bundle",
     "repositories" : [{
     	
     }],
