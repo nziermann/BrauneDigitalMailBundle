@@ -1,0 +1,44 @@
+BrauneDigital\MailBundle\Entity\BaseMail:
+    type: mappedSuperclass
+    repositoryClass: BrauneDigital\MailBundle\Entity\MailRepository
+    fields:
+        status:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        response:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        locale:
+            type: string
+            scale: 0
+            length: 8
+            unique: false
+            nullable: true
+            precision: 0
+        recipient:
+            type: string
+            scale: 0
+            length: 256
+            unique: false
+            nullable: true
+            precision: 0
+    manyToOne:
+        template:
+            targetEntity: BrauneDigital\MailBundle\Entity\MailTemplate
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: mails
+            joinColumns:
+                mail_template_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,16 @@
+BrauneDigital\MailBundle\Entity\UserMail:
+    type: entity
+    table: likez_user_mails
+    manyToOne:
+        object:
+            targetEntity: Application\Sonata\UserBundle\Entity\User
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: mails
+            joinColumns:
+                object_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,15 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+	<div>
+		{% if object.status == 1 %}
+			<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+		{% elseif object.status == 2 %}
+			<span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+		{% elseif object.status == 3 %}
+			<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+		{% elseif object.status == 4 %}
+			<span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+		{% endif %}
+	</div>
+{% endblock %}

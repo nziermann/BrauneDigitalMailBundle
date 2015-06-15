@@ -1,0 +1,9 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+	<div>
+		{% if object.response %}
+			<span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="{{ object.response }}"></span>
+		{% endif %}
+	</div>
+{% endblock %}

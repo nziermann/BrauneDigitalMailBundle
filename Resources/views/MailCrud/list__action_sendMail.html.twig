@@ -1,0 +1,10 @@
+<a class="btn btn-info btn-sm" href="{{ admin.generateObjectUrl('previewMail', object) }}" target="_blank">Preview</a>
+{% if object.status == 1 %}
+	<a class="btn btn-primary btn-sm" href="{{ admin.generateObjectUrl('sendMail', object) }}">Send</a>
+{% endif %}
+{% if object.status == 1 %}
+	<a class="btn btn-warning btn-sm" href="{{ admin.generateObjectUrl('changeStatus', object, {status: 4}) }}">Disable</a>
+{% endif %}
+{% if object.status == 4 %}
+	<a class="btn btn-success btn-sm" href="{{ admin.generateObjectUrl('changeStatus', object, {status: 1}) }}">Enable</a>
+{% endif %}

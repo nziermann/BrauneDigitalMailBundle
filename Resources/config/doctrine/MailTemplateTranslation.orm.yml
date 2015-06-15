@@ -1,0 +1,20 @@
+BrauneDigital\MailBundle\Entity\MailTemplateTranslation:
+    type: entity
+    table: likez_mail_templates_translation
+    id: {  }
+    fields:
+        subject:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+        body:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    lifecycleCallbacks: {  }

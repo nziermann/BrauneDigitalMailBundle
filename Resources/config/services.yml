@@ -1,0 +1,24 @@
+services:
+    sonata.admin.braunedigital.mail.mail:
+        class: BrauneDigital\MailBundle\Admin\MailAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Mails", label: "Mails" }
+        arguments:
+            - ~
+            - Application\BrauneDigital\MailBundle\Entity\Mail
+            - BrauneDigitalMailBundle:MailCrud
+        calls:
+            - [ setTranslationDomain, [BrauneDigitalMailBundle]]
+    sonata.admin.braunedigital.mail.mail_template:
+        class: BrauneDigital\MailBundle\Admin\MailTemplateAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Mails", label: "Mail Templates" }
+        arguments:
+            - ~
+            - BrauneDigital\MailBundle\Entity\MailTemplate
+            - ~
+        calls:
+            - [ setTranslationDomain, [BrauneDigitalMailBundle]]
+    sonata.admin.braunedigital.mail.service.mail:
+        class: BrauneDigital\MailBundle\Service\MailService
+        arguments: [@service_container, @templating]
