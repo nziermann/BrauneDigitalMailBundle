@@ -8,7 +8,6 @@ BrauneDigital\MailBundle\Entity\UserMail:
                 - persist
             fetch: LAZY
             mappedBy: null
-            inversedBy: mails
             joinColumns:
                 object_id:
                     referencedColumnName: id

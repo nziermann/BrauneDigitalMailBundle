@@ -102,11 +102,11 @@ class BaseMail
     /**
      * Set template
      *
-     * @param \Application\BrauneDigital\MailBundle\Entity\MailTemplate $template
+     * @param \BrauneDigital\MailBundle\Entity\MailTemplate $template
      *
      * @return Mail
      */
-    public function setTemplate(\Application\BrauneDigital\MailBundle\Entity\MailTemplate $template = null)
+    public function setTemplate(\BrauneDigital\MailBundle\Entity\MailTemplate $template = null)
     {
         $this->template = $template;
 
@@ -116,7 +116,7 @@ class BaseMail
     /**
      * Get template
      *
-     * @return \Application\BrauneDigital\MailBundle\Entity\MailTemplate
+     * @return \BrauneDigital\MailBundle\Entity\MailTemplate
      */
     public function getTemplate()
     {

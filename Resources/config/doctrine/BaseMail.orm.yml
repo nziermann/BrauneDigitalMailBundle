@@ -36,7 +36,6 @@ BrauneDigital\MailBundle\Entity\BaseMail:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: mails
             joinColumns:
                 mail_template_id:
                     referencedColumnName: id

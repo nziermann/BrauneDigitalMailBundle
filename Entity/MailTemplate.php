@@ -39,7 +39,6 @@ class MailTemplate
     private $senderMail;
 
 
-
     /**
      * @var string
      */
