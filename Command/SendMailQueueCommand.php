@@ -48,7 +48,7 @@ class SendMailQueueCommand extends ContainerAwareCommand
 
 			$output->writeln($mail->getRecipient());
 			if ($mail->getRecipient()) {
-				$mailService = $this->getContainer()->get('likez.base.service.mail');
+				$mailService = $this->getContainer()->get('braunedigital.mail.service.mail');
 				$mailService->handle($mail);
 			} else {
 				$output->writeln('No email');

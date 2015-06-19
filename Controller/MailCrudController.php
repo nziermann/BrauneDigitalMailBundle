@@ -29,7 +29,7 @@ class MailCrudController extends Controller
 			'object' => $object
 		));
 
-		$mailService = $this->get('likez.base.service.mail');
+		$mailService = $this->get('braunedigital.mail.service.mail');
 		$content = $mailService->replaceMarkers($content);
 
 		/**
@@ -53,7 +53,7 @@ class MailCrudController extends Controller
 			throw new AccessDeniedException();
 		}
 
-		$mailService = $this->get('likez.base.service.mail');
+		$mailService = $this->get('braunedigital.mail.service.mail');
 		$mailService->handle($object);
 		$this->addFlash("sonata_flash_success", "The mail has been sent.");
 

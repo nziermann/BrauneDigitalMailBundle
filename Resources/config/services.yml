@@ -19,6 +19,7 @@ services:
             - ~
         calls:
             - [ setTranslationDomain, [BrauneDigitalMailBundle]]
-    sonata.admin.braunedigital.mail.service.mail:
+
+    braunedigital.mail.service.mail:
         class: BrauneDigital\MailBundle\Service\MailService
         arguments: [@service_container, @templating]
