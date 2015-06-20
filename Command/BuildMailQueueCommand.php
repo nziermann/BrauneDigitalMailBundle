@@ -2,7 +2,7 @@
 
 namespace BrauneDigital\MailBundle\Command;
 
-use BrauneDigital\MailBundle\Entity\OperatorMail;
+use Application\BrauneDigital\MailBundle\Entity\ProviderMail;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,7 +17,7 @@ class BuildMailQueueCommand extends ContainerAwareCommand
 	protected function configure()
 	{
 		$this
-			->setName('likez:mails:create')
+			->setName('braunedigital:mails:create')
 			->setDescription('Build mail queue')
 			->addArgument(
 				'entity',
@@ -43,7 +43,7 @@ class BuildMailQueueCommand extends ContainerAwareCommand
 		if ($template) {
 			switch ($input->getArgument('entity')) {
 				default:
-					$mailRepository = $em->getRepository('BrauneDigitalMailBundle:OperatorMail');
+					$mailRepository = $em->getRepository('ApplicationBrauneDigitalMailBundle:ProviderMail');
 			}
 
 
@@ -66,7 +66,7 @@ class BuildMailQueueCommand extends ContainerAwareCommand
 					)) && !$mailWithNotTemplate && !$object->hasUserRelation()) {
 					switch ($input->getArgument('entity')) {
 						default:
-							$mail = new OperatorMail();
+							$mail = new ProviderMail();
 					}
 					$mail->setTemplate($template);
 					$mail->setStatus(Mail::STATUS_WAITING_FOR_SENDING);

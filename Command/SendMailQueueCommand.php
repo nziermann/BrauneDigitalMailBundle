@@ -17,7 +17,7 @@ class SendMailQueueCommand extends ContainerAwareCommand
 	protected function configure()
 	{
 		$this
-			->setName('likez:mails:send')
+			->setName('braunedigital:mails:send')
 			->setDescription('Send mail queue')
 			->addArgument(
 				'limit',
@@ -28,24 +28,18 @@ class SendMailQueueCommand extends ContainerAwareCommand
 
 	protected function execute(InputInterface $input, OutputInterface $output) {
 
-		$context = $this->getContainer()->get('router')->getContext();
-		$context->setHost('www.escape-gamer.com');
-		$context->setScheme('http');
-		$context->setBaseUrl('');
-
 		$limit = $input->getArgument('limit');
 		if (!$limit) {
 			$limit = 50;
 		}
 
 		$em = $this->getContainer()->get('doctrine')->getManager();
-		$mailRepository = $em->getRepository('BrauneDigitalMailBundle:Mail');
+		$mailRepository = $em->getRepository('ApplicationBrauneDigitalMailBundle:Mail');
 		$mails = $mailRepository->findBy(array(
 			'status' => Mail::STATUS_WAITING_FOR_SENDING
 		), array(), $limit);
 
 		foreach ($mails as $mail) {
-
 			$output->writeln($mail->getRecipient());
 			if ($mail->getRecipient()) {
 				$mailService = $this->getContainer()->get('braunedigital.mail.service.mail');
@@ -56,7 +50,6 @@ class SendMailQueueCommand extends ContainerAwareCommand
 				$mail->setResponse(json_encode(array('message' => 'No recipient could be identified.')));
 				$em->persist($mail);
 			}
-
 
 		}
 
