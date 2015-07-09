@@ -18,7 +18,25 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('braunedigital_mail');
+        $rootNode = $treeBuilder->root('braune_digital_mail');
+
+		$rootNode
+			->children()
+				->arrayNode('entities')
+					->useAttributeAsKey('entity')
+					->prototype('array')
+						->children()
+							->scalarNode('entity')->end()
+							->scalarNode('service')->end()
+							->booleanNode('check_translation')->defaultFalse()->end()
+							->arrayNode('events')
+								->prototype('scalar')->end()
+							->end()
+						->end()
+					->end()
+				->end()
+			->end()
+		;
 
 
         return $treeBuilder;
