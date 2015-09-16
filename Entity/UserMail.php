@@ -5,17 +5,9 @@ namespace BrauneDigital\MailBundle\Entity;
 use Application\BrauneDigital\MailBundle\Entity\Mail;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table("likez_user_mails")
- *
- */
 class UserMail extends Mail
 {
-	/**
-	 * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="mails", cascade={"persist"})
-	 * @ORM\JoinColumn(name="object_id", referencedColumnName="id")
-	 */
+
 	private $object;
 
 	/**

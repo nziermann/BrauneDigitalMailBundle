@@ -3,7 +3,7 @@ BrauneDigital\MailBundle\Entity\UserMail:
     table: likez_user_mails
     manyToOne:
         object:
-            targetEntity: Application\Sonata\UserBundle\Entity\User
+            targetEntity: BrauneDigital\MailBundle\Model\UserInterface
             cascade:
                 - persist
             fetch: LAZY
