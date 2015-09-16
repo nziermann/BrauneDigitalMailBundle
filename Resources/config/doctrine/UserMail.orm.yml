@@ -1,6 +1,6 @@
 BrauneDigital\MailBundle\Entity\UserMail:
     type: entity
-    table: likez_user_mails
+    table: user_mails
     manyToOne:
         object:
             targetEntity: BrauneDigital\MailBundle\Model\UserInterface

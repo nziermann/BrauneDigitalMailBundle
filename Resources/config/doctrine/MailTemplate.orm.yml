@@ -1,6 +1,6 @@
 BrauneDigital\MailBundle\Entity\MailTemplate:
     type: entity
-    table: likez_mail_templates
+    table: mail_templates
     repositoryClass: BrauneDigital\MailBundle\Entity\MailTemplateRepository
     id:
         id:

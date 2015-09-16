@@ -40,7 +40,7 @@ class MailTemplateAdmin extends TranslationAdmin
 						'label' => 'Description',
 						'empty_data' => '',
 						'required' => false,
-						'config_name' => 'likez_default'
+						'config_name' => 'default'
 					),
 
 				)

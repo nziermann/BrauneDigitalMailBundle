@@ -1,6 +1,6 @@
 BrauneDigital\MailBundle\Entity\MailTemplateTranslation:
     type: entity
-    table: likez_mail_templates_translation
+    table: mail_templates_translation
     id: {  }
     fields:
         subject:
