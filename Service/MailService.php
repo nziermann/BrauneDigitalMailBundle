@@ -92,8 +92,10 @@ class MailService implements MailerInterface
 	 * @return mixed
 	 */
 	public function replaceMarkers($content) {
-		preg_match_all("/\###(.*)\###/", $content, $matches);
+
+		preg_match_all('/' . preg_quote('###', '/') . '([A-Z0-9_|\\-]*)' . preg_quote('###', '/') . '/is', $content, $matches);
 		$delete = array();
+
 		foreach ($matches[0] as $i => $match) {
 			preg_match("/\---" . $matches[1][$i] . "(.*)\---/", $content, $replacement);
 			if (isset($replacement[0])) {

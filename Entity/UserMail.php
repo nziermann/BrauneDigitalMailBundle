@@ -10,6 +10,8 @@ class UserMail extends Mail
 
 	private $object;
 
+    private $object2;
+
 	/**
 	 * @return mixed
 	 */
@@ -25,6 +27,22 @@ class UserMail extends Mail
 	{
 		$this->object = $object;
 	}
+
+    /**
+     * @return mixed
+     */
+    public function getObject2()
+    {
+        return $this->object2;
+    }
+
+    /**
+     * @param mixed $object2
+     */
+    public function setObject2($object2)
+    {
+        $this->object2 = $object2;
+    }
 
     /**
      * @return mixed

@@ -12,4 +12,14 @@ BrauneDigital\MailBundle\Entity\UserMail:
                 object_id:
                     referencedColumnName: id
             orphanRemoval: false
+        object2:
+            targetEntity: BrauneDigital\MailBundle\Model\UserInterface
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            joinColumns:
+                object2_id:
+                    referencedColumnName: id
+            orphanRemoval: false
     lifecycleCallbacks: {  }
