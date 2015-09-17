@@ -16,10 +16,12 @@ class MailService implements MailerInterface
 
 	protected $container;
 	protected $templating;
+	protected $layouts;
 
-	public function __construct(ContainerInterface $container, EngineInterface $templating) {
+	public function __construct(ContainerInterface $container, EngineInterface $templating, $layouts) {
 		$this->container = $container;
 		$this->templating = $templating;
+		$this->layouts = $layouts;
 	}
 
 	public function handle(Mail $object) {
@@ -119,7 +121,7 @@ class MailService implements MailerInterface
 			->getManager();
 		$template = $em
 			->getRepository('BrauneDigitalMailBundle:MailTemplate')
-			->findOneBy(array('layout' => 'ApplicationAppBundle:Mail:Registration/confirm.html.twig'));
+			->findOneBy(array('layout' => $this->layouts['confirm']));
 		if ($template) {
 			$mail = new UserMail();
 			$mail->setTemplate($template);
@@ -139,12 +141,13 @@ class MailService implements MailerInterface
 	 */
 	public function sendResettingEmailMessage(UserInterface $user)
 	{
+
 		$em = $this->container
 			->get('doctrine')
 			->getManager();
 		$template = $em
 			->getRepository('BrauneDigitalMailBundle:MailTemplate')
-			->findOneBy(array('layout' => 'ApplicationAppBundle:Mail:Resetting/resetPassword.html.twig'));
+			->findOneBy(array('layout' => $this->layouts['password_reset']));
 		if ($template) {
 			$mail = new UserMail();
 			$mail->setTemplate($template);
