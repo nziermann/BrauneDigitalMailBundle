@@ -28,16 +28,6 @@ class MailTemplate
      */
     private $title;
 
-    /**
-     * @var string
-     */
-    private $senderName;
-
-    /**
-     * @var string
-     */
-    private $senderMail;
-
 
     /**
      * @var string
@@ -86,54 +76,6 @@ class MailTemplate
         return $this->title;
     }
 
-
-    /**
-     * Set senderName
-     *
-     * @param string $senderName
-     *
-     * @return MailTemplate
-     */
-    public function setSenderName($senderName)
-    {
-        $this->senderName = $senderName;
-
-        return $this;
-    }
-
-    /**
-     * Get senderName
-     *
-     * @return string
-     */
-    public function getSenderName()
-    {
-        return $this->senderName;
-    }
-
-    /**
-     * Set senderMail
-     *
-     * @param string $senderMail
-     *
-     * @return MailTemplate
-     */
-    public function setSenderMail($senderMail)
-    {
-        $this->senderMail = $senderMail;
-
-        return $this;
-    }
-
-    /**
-     * Get senderMail
-     *
-     * @return string
-     */
-    public function getSenderMail()
-    {
-        return $this->senderMail;
-    }
 
     /**
      * Set layout

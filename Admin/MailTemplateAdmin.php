@@ -24,12 +24,20 @@ class MailTemplateAdmin extends TranslationAdmin
 
         $formMapper
             ->add('title')
-            ->add('senderName')
-            ->add('senderMail')
 			->add('translations', 'a2lix_translations', array(
 				'locales' => $this->currentLocale,
 				'required_locales' => $this->currentLocale,
 				'fields' => array(
+                    'senderName' => array(
+                        'field_type' => 'text',
+                        'label' => 'Sender Name',
+                        'empty_data' => '',
+                    ),
+                    'senderMail' => array(
+                        'field_type' => 'text',
+                        'label' => 'Sender Mail',
+                        'empty_data' => '',
+                    ),
 					'subject' => array(
 						'field_type' => 'text',
 						'label' => 'Subject',
@@ -65,7 +73,6 @@ class MailTemplateAdmin extends TranslationAdmin
             ->addIdentifier('id')
             ->addIdentifier('title')
             ->add('subject')
-
         ;
     }
 

@@ -22,6 +22,16 @@ class MailTemplateTranslation
 	 */
 	private $body;
 
+    /**
+     * @var string
+     */
+    private $senderName;
+
+    /**
+     * @var string
+     */
+    private $senderMail;
+
 	/**
 	 * @return string
 	 */
@@ -54,7 +64,51 @@ class MailTemplateTranslation
 		$this->body = $body;
 	}
 
+    /**
+     * Set senderName
+     *
+     * @param string $senderName
+     *
+     * @return MailTemplate
+     */
+    public function setSenderName($senderName)
+    {
+        $this->senderName = $senderName;
 
+        return $this->getTranslatable();
+    }
 
+    /**
+     * Get senderName
+     *
+     * @return string
+     */
+    public function getSenderName()
+    {
+        return $this->senderName;
+    }
 
+    /**
+     * Set senderMail
+     *
+     * @param string $senderMail
+     *
+     * @return MailTemplate
+     */
+    public function setSenderMail($senderMail)
+    {
+        $this->senderMail = $senderMail;
+
+        return $this->getTranslatable();
+    }
+
+    /**
+     * Get senderMail
+     *
+     * @return string
+     */
+    public function getSenderMail()
+    {
+        return $this->senderMail;
+    }
 }
