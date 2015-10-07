@@ -21,20 +21,6 @@ BrauneDigital\MailBundle\Entity\MailTemplate:
             unique: false
             nullable: false
             precision: 0
-        senderName:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: false
-            precision: 0
-        senderMail:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: false
-            precision: 0
         layout:
             type: string
             scale: 0
