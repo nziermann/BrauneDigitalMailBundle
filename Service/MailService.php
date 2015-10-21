@@ -17,11 +17,13 @@ class MailService implements MailerInterface
 	protected $container;
 	protected $templating;
 	protected $layouts;
+	protected $config;
 
-	public function __construct(ContainerInterface $container, EngineInterface $templating, $layouts) {
+	public function __construct(ContainerInterface $container, EngineInterface $templating, $layouts, $config) {
 		$this->container = $container;
 		$this->templating = $templating;
 		$this->layouts = $layouts;
+        $this->config = $config;
 	}
 
 	public function handle(Mail $object) {
@@ -69,6 +71,15 @@ class MailService implements MailerInterface
                 $txtBody,
                 'text/plain'
             );
+
+        if (isset($this->config['message'])) {
+            if (isset($this->config['message']['headers']) && is_array($this->config['message']['headers'])) {
+                $headerSet = $message->getHeaders();
+                foreach($this->config['message']['headers'] as $key => $value) {
+                    $headerSet->addTextHeader($key, $value);
+                }
+            }
+        }
 
         if ($object->getRecipient() != null) {
             $message->setTo($object->getRecipient());

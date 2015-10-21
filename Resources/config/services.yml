@@ -28,7 +28,7 @@ services:
 
     braunedigital.mail.service.mail:
         class: BrauneDigital\MailBundle\Service\MailService
-        arguments: [@service_container, @templating, '%braunedigital.mail.service.layouts%']
+        arguments: [@service_container, @templating, '%braunedigital.mail.service.layouts%', '%braune_digital_mail%']
 
     braunedigital.mail.event.scubscriber:
         class: BrauneDigital\MailBundle\EventListener\MailSubscriber

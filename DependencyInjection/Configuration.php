@@ -39,6 +39,18 @@ class Configuration implements ConfigurationInterface
 		;
 
 
+        $this->addMessageSection($rootNode);
+
+
         return $treeBuilder;
+    }
+
+    public function addMessageSection($rootNode) {
+        $rootNode
+            ->children()
+                ->arrayNode('message')
+                    ->children()
+                        ->arrayNode('headers')
+                            ->prototype('scalar');
     }
 }
