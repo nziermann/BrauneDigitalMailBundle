@@ -51,6 +51,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('message')
                     ->children()
                         ->arrayNode('headers')
+                            ->normalizeKeys(false)
                             ->prototype('scalar');
     }
 }
