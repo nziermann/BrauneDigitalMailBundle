@@ -33,6 +33,11 @@ class MailService implements MailerInterface
 
         $template = $object->getTemplate();
 
+        //try to use the request locale if none was set
+        if($this->config['message']['use_request_locale'] && $object->getLocale() == null) {
+            $object->setLocale($this->getCurrentLocale());
+        }
+
 		if ($object->getLocale() != null) {
 			$template->setForceLocale($object->getLocale());
 		}
@@ -127,22 +132,8 @@ class MailService implements MailerInterface
 	 *
 	 * @return void
 	 */
-	public function sendConfirmationEmailMessage(UserInterface $user)
-	{
-		$em = $this->container
-			->get('doctrine')
-			->getManager();
-		$template = $em
-			->getRepository('BrauneDigitalMailBundle:MailTemplate')
-			->findOneBy(array('layout' => $this->layouts['confirm']));
-		if ($template) {
-			$mail = new UserMail();
-			$mail->setTemplate($template);
-			$mail->setObject($user);
-			$em->persist($mail);
-			$em->flush();
-			$this->handle($mail);
-		}
+	public function sendConfirmationEmailMessage(UserInterface $user) {
+        $this->sendUserMail($user, $this->layouts['confirm']);
 	}
 
 	/**
@@ -152,23 +143,52 @@ class MailService implements MailerInterface
 	 *
 	 * @return void
 	 */
-	public function sendResettingEmailMessage(UserInterface $user)
-	{
-
-		$em = $this->container
-			->get('doctrine')
-			->getManager();
-		$template = $em
-			->getRepository('BrauneDigitalMailBundle:MailTemplate')
-			->findOneBy(array('layout' => $this->layouts['password_reset']));
-		if ($template) {
-			$mail = new UserMail();
-			$mail->setTemplate($template);
-			$mail->setObject($user);
-			$em->persist($mail);
-			$em->flush();
-			$this->handle($mail);
-		}
+	public function sendResettingEmailMessage(UserInterface $user) {
+		$this->sendUserMail($user, $this->layouts['password_reset']);
 	}
 
+    /**
+     * Send an email to a user based on a user instance, a template and an optional locale
+     * @param UserInterface $user
+     * @param $layout
+     * @param null $locale
+     */
+    protected function sendUserMail(UserInterface $user, $layout, $locale = null) {
+        $em = $this->container
+            ->get('doctrine')
+            ->getManager();
+        $template = $em
+            ->getRepository('BrauneDigitalMailBundle:MailTemplate')
+            ->findOneBy(array('layout' => $layout));
+        if ($template) {
+            $mail = new UserMail();
+            $mail->setTemplate($template);
+            $mail->setObject($user);
+
+            if ($this->config['message']['use_request_locale']) {
+                $mail->setLocale($this->getCurrentLocale());
+            }
+
+            $em->persist($mail);
+            $em->flush();
+            $this->handle($mail);
+        }
+    }
+
+    /**
+     * Get the current locale from a request when sending
+     * @return null
+     */
+    protected function getCurrentLocale() {
+        $requestStack = $this->container->get('request_stack');
+
+        if ($requestStack) {
+            $request = $requestStack->getCurrentRequest();
+
+            if ($request) {
+                return $request->getLocale();
+            }
+        }
+        return null;
+    }
 }

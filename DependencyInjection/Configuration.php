@@ -50,6 +50,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('message')
                     ->children()
+                        ->scalarNode('use_request_locale')->defaultTrue()->end()
                         ->arrayNode('headers')
                             ->normalizeKeys(false)
                             ->prototype('scalar');
