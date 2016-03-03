@@ -13,6 +13,7 @@
         "MIT"
     ],
     "require" : {
+        "braune-digital/translation-base-bundle": "1.1.*"
     },
     "autoload" : {
         "psr-4" : {

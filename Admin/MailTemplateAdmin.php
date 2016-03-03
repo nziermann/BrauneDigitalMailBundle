@@ -3,6 +3,7 @@
 
 namespace BrauneDigital\MailBundle\Admin;
 
+use BrauneDigital\MailBundle\Service\TemplateSearcherInterface;
 use BrauneDigital\TranslationBaseBundle\Admin\TranslationAdmin;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -12,8 +13,34 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 class MailTemplateAdmin extends TranslationAdmin
 {
+	protected $mailConfig = array();
+	protected $templateSearcher;
 
+	public function __construct($code, $class, $baseControllerName, $config, TemplateSearcherInterface $templateSearcher = null) {
+		parent::__construct($code, $class, $baseControllerName);
+		$this->mailConfig = $config;
+		$this->templateSearcher = $templateSearcher;
+	}
 
+	/**
+	 * @return array get a list of layout choices
+	 */
+	protected function getLayoutChoices() {
+
+		if($this->templateSearcher == null) {
+			return array();
+		}
+
+		$basePaths = array();
+
+		if(is_array($this->mailConfig['base_template_path'])) {
+			$basePaths = $this->mailConfig['base_template_path'];
+		} else {
+			$basePaths = array($this->mailConfig['base_template_path']);
+		}
+
+		return $this->templateSearcher->getTemplates($basePaths);
+	}
 
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
@@ -54,8 +81,25 @@ class MailTemplateAdmin extends TranslationAdmin
 				)
 			), array(
 				'label' => ''
-			))
-            ->add('layout')
+			));
+
+
+			$layoutChoices = $this->getLayoutChoices();
+
+			if($this->mailConfig['base_template_path'] &&
+				$layoutChoices != null &&
+				count($layoutChoices) > 0) {
+					if($this->getSubject()->getLayout() && !in_array($this->getSubject()->getLayout(), $layoutChoices)) {
+						$layoutChoices[] = $this->getSubject()->getLayout();
+					}
+
+					$layoutChoices = array_combine($layoutChoices, $layoutChoices);
+					$formMapper->add('layout', 'choice', array(
+					'choices' => $layoutChoices
+					));
+			} else {
+				$formMapper->add('layout');
+			}
         ;
     }
 

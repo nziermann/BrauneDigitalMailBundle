@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
 		$rootNode
 			->children()
 				->scalarNode('user_class')->isRequired()->end()
+				->variableNode('base_template_path')->defaultValue('emails')->end()
 				->arrayNode('entities')
 					->useAttributeAsKey('entity')
 					->prototype('array')

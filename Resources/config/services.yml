@@ -2,36 +2,45 @@ parameters:
     braunedigital.mail.service.layouts:
         password_reset: ApplicationAppBundle:Mail:Resetting/resetPassword.html.twig
         confirm: ApplicationAppBundle:Mail:Registration/confirm.html.twig
+    braunedigital.mail.service.template_searcher.class: "BrauneDigital\MailBundle\Service\TemplateSearcher"
+    braunedigital.mail.service.template_searcher.filter: "*.html.twig"
+    braunedigital.mail.service.template_searcher.base_dir: "Resources/views"
 
 services:
     sonata.admin.braunedigital.mail.mail:
-        class: BrauneDigital\MailBundle\Admin\MailAdmin
+        class: 'BrauneDigital\MailBundle\Admin\MailAdmin'
         tags:
             - { name: sonata.admin, manager_type: orm, group: "Mails", label: "Mails" }
         arguments:
             - ~
-            - Application\BrauneDigital\MailBundle\Entity\Mail
+            - 'Application\BrauneDigital\MailBundle\Entity\Mail'
             - BrauneDigitalMailBundle:MailCrud
         calls:
             - [ setTranslationDomain, [BrauneDigitalMailBundle]]
 
     sonata.admin.braunedigital.mail.mail_template:
-        class: BrauneDigital\MailBundle\Admin\MailTemplateAdmin
+        class: 'BrauneDigital\MailBundle\Admin\MailTemplateAdmin'
         tags:
             - { name: sonata.admin, manager_type: orm, group: "Mails", label: "Mail Templates" }
         arguments:
             - ~
-            - BrauneDigital\MailBundle\Entity\MailTemplate
+            - 'BrauneDigital\MailBundle\Entity\MailTemplate'
             - ~
+            - '%braune_digital_mail%'
+            - '@braunedigital.mail.service.template_searcher'
         calls:
             - [ setTranslationDomain, [BrauneDigitalMailBundle]]
 
+    braunedigital.mail.service.template_searcher:
+        class: '%braunedigital.mail.service.template_searcher.class%'
+        arguments: ['@kernel', '%braunedigital.mail.service.template_searcher.base_dir%', '%braunedigital.mail.service.template_searcher.filter%']
+
     braunedigital.mail.service.mail:
         class: BrauneDigital\MailBundle\Service\MailService
-        arguments: [@service_container, @templating, '%braunedigital.mail.service.layouts%', '%braune_digital_mail%']
+        arguments: ['@service_container', '@templating', '%braunedigital.mail.service.layouts%', '%braune_digital_mail%']
 
     braunedigital.mail.event.scubscriber:
-        class: BrauneDigital\MailBundle\EventListener\MailSubscriber
-        arguments: [@service_container]
+        class: 'BrauneDigital\MailBundle\EventListener\MailSubscriber'
+        arguments: ['@service_container']
         tags:
             - { name: doctrine.event_subscriber, connection: default }
