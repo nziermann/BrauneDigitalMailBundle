@@ -33,8 +33,13 @@ class MailService implements MailerInterface
 
         $template = $object->getTemplate();
 
+
+		if(!$template) {
+			return;
+		}
+
         //try to use the request locale if none was set
-        if($this->config['message']['use_request_locale'] && $object->getLocale() == null) {
+        if((!array_key_exists('message', $this->config) ||  $this->config['message']['use_request_locale']) && $object->getLocale() == null) {
             $object->setLocale($this->getCurrentLocale());
         }
 
