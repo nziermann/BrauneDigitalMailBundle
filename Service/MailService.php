@@ -19,6 +19,14 @@ class MailService implements MailerInterface
 	protected $layouts;
 	protected $config;
 
+	/**
+	 * MailService constructor.
+	 *
+	 * @param ContainerInterface $container
+	 * @param EngineInterface    $templating
+	 * @param                    $layouts
+	 * @param                    $config
+	 */
 	public function __construct(ContainerInterface $container, EngineInterface $templating, $layouts, $config) {
 		$this->container = $container;
 		$this->templating = $templating;
@@ -26,6 +34,23 @@ class MailService implements MailerInterface
         $this->config = $config;
 	}
 
+	/**
+	 * @param $layout
+	 */
+	public function getTemplate($layout) {
+		$em = $this->container
+			->get('doctrine')
+			->getManager();
+		return $em
+			->getRepository('BrauneDigitalMailBundle:MailTemplate')
+			->findOneByLayout($layout);
+	}
+
+	/**
+	 * @param Mail $object
+	 *
+	 * @return bool
+	 */
 	public function handle(Mail $object) {
 
 		$mailer = $this->container->get('mailer');
@@ -154,12 +179,10 @@ class MailService implements MailerInterface
      * @param null $locale
      */
     protected function sendUserMail(UserInterface $user, $layout, $locale = null) {
-        $em = $this->container
-            ->get('doctrine')
-            ->getManager();
-        $template = $em
-            ->getRepository('BrauneDigitalMailBundle:MailTemplate')
-            ->findOneBy(array('layout' => $layout));
+        $template = $this->getTemplate($layout);
+		$em = $this->container
+			->get('doctrine')
+			->getManager();
         if ($template) {
             $mail = new UserMail();
             $mail->setTemplate($template);

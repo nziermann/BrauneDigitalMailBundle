@@ -20,7 +20,7 @@ class BaseMail
      * @var integer
      *
      */
-    private $status;
+    private $status = self::STATUS_WAITING_FOR_SENDING;
 
     /**
      * @var string
