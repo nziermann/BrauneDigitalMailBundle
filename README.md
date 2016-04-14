@@ -1,6 +1,6 @@
 # BrauneDigitalMailBundle
 
-This Symfony2-Bundle allows an easy Management of E-Mail-Teamplates with additional translations. E-Mails are listed and can be previewed in SonataAdmin.
+This Symfony2-Bundle allows an easy Management of E-Mail-Templates with additional translations. E-Mails are listed and can be previewed in SonataAdmin.
 
 ## Installation
 
