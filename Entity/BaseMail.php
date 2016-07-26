@@ -8,8 +8,11 @@ namespace BrauneDigital\MailBundle\Entity;
  * Class Mail
  * @package BrauneDigital\MailBundle\Entity
  */
-class BaseMail
+abstract class BaseMail
 {
+
+
+    abstract public function getObject();
 
 	const STATUS_WAITING_FOR_SENDING = 1;
 	const STATUS_SENT_SUCCESS = 2;
