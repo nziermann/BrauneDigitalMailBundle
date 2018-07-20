@@ -2,6 +2,8 @@ parameters:
     braunedigital.mail.service.layouts:
         password_reset: ApplicationAppBundle:Mail:Resetting/resetPassword.html.twig
         confirm: ApplicationAppBundle:Mail:Registration/confirm.html.twig
+    braunedigital.mail.service.mail.class: BrauneDigital\MailBundle\Service\MailService
+
 
 services:
     sonata.admin.braunedigital.mail.mail:
@@ -27,7 +29,7 @@ services:
             - [ setTranslationDomain, [BrauneDigitalMailBundle]]
 
     braunedigital.mail.service.mail:
-        class: BrauneDigital\MailBundle\Service\MailService
+        class: "%braunedigital.mail.service.mail.class%"
         arguments: [@service_container, @templating, '%braunedigital.mail.service.layouts%', '%braune_digital_mail%']
 
     braunedigital.mail.event.scubscriber:
