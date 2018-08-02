@@ -5,6 +5,7 @@ parameters:
     braunedigital.mail.service.template_searcher.filter: "*.html.twig"
     braunedigital.mail.service.template_searcher.base_dir: "Resources/views"
     braunedigital.mail.service.mail.class: BrauneDigital\MailBundle\Service\MailService
+    braunedigital.mail.admin.mail.class: BrauneDigital\MailBundle\Admin\MailAdmin
 
 services:
     sonata.admin.braunedigital.mail.mail:
