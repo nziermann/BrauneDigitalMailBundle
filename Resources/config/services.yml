@@ -4,6 +4,7 @@ parameters:
     braunedigital.mail.service.template_searcher.class: BrauneDigital\MailBundle\Service\TemplateSearcher
     braunedigital.mail.service.template_searcher.filter: "*.html.twig"
     braunedigital.mail.service.template_searcher.base_dir: "Resources/views"
+    braunedigital.mail.service.mail.class: BrauneDigital\MailBundle\Service\MailService
 
 services:
     sonata.admin.braunedigital.mail.mail:
@@ -35,7 +36,7 @@ services:
         arguments: ['@kernel', '%braunedigital.mail.service.template_searcher.base_dir%', '%braunedigital.mail.service.template_searcher.filter%']
 
     braunedigital.mail.service.mail:
-        class: BrauneDigital\MailBundle\Service\MailService
+        class: "%braunedigital.mail.service.mail.class%"
         arguments: ['@service_container', '@templating', '%braunedigital.mail.service.layouts%', '%braune_digital_mail%']
 
     braunedigital.mail.event.scubscriber:

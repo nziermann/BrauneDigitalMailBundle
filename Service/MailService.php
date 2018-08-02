@@ -19,6 +19,10 @@ class MailService implements MailerInterface
 	protected $layouts;
 	protected $config;
 
+
+	const RENDER_TYPE_HTML = 'html';
+	const RENDER_TYPE_TXT = 'txt';
+
 	/**
 	 * MailService constructor.
 	 *
@@ -79,13 +83,17 @@ class MailService implements MailerInterface
 			array('object' => $object)
 		);
 
+		$htmlBody = $this->beforeReplacement($htmlBody, $object, self::RENDER_TYPE_HTML);
 		$htmlBody = $this->replaceMarkers($htmlBody);
+		$htmlBody = $this->afterReplacement($htmlBody, $object, self::RENDER_TYPE_HTML);
 
 		$txtBody = $this->templating->render(
 			str_replace('html.twig', 'txt.twig', $template->getLayout()),
 			array('object' => $object)
 		);
+		$txtBody = $this->beforeReplacement($txtBody, $object, self::RENDER_TYPE_TXT);
 		$txtBody = $this->replaceMarkers($txtBody);
+		$txtBody = $this->afterReplacement($txtBody, $object, self::RENDER_TYPE_TXT);
 
 		if ($object->getLocale() != null) {
 			$subject = $template->translate($object->getLocale())->getSubject();
@@ -155,6 +163,15 @@ class MailService implements MailerInterface
 		return $content;
 	}
 
+	public function beforeReplacement($bodyText, Mail $object, $renderType) {
+		return $bodyText;
+	}
+
+	public function afterReplacement($bodyText, Mail $object, $renderType) {
+		return $bodyText;
+	}
+
+
 	/**
 	 * Send an email to a user to confirm the account creation
 	 *
@@ -219,4 +236,6 @@ class MailService implements MailerInterface
         }
         return null;
     }
+
+
 }
