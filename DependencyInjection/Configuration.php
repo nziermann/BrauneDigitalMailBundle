@@ -40,9 +40,8 @@ class Configuration implements ConfigurationInterface
 			->end()
 		;
 
-
         $this->addMessageSection($rootNode);
-
+        $this->addLayoutsSection($rootNode);
 
         return $treeBuilder;
     }
@@ -57,4 +56,19 @@ class Configuration implements ConfigurationInterface
                             ->normalizeKeys(false)
                             ->prototype('scalar');
     }
+
+	public function addLayoutsSection($rootNode) {
+		$rootNode
+			->children()
+				->arrayNode('layouts')
+				//TODO: remove legacy layout values
+				->defaultValue(
+					array(
+						'password_reset' =>  'ApplicationAppBundle:Mail:Resetting/resetPassword.html.twig',
+						'confirm' =>  'ApplicationAppBundle:Mail:Registration/confirm.html.twig'
+					)
+				)
+				->useAttributeAsKey('layout')
+				->prototype('scalar');
+	}
 }

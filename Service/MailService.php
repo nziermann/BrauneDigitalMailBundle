@@ -19,6 +19,14 @@ class MailService implements MailerInterface
 	protected $layouts;
 	protected $config;
 
+	/**
+	 * MailService constructor.
+	 *
+	 * @param ContainerInterface $container
+	 * @param EngineInterface    $templating
+	 * @param                    $layouts
+	 * @param                    $config
+	 */
 	public function __construct(ContainerInterface $container, EngineInterface $templating, $layouts, $config) {
 		$this->container = $container;
 		$this->templating = $templating;
@@ -26,6 +34,28 @@ class MailService implements MailerInterface
         $this->config = $config;
 	}
 
+	/**
+	 * @param $layout
+	 */
+	public function getTemplate($layout) {
+
+		if(array_key_exists($layout, $this->layouts)) {
+			$layout = $this->layouts[$layout];
+		}
+
+		$em = $this->container
+			->get('doctrine')
+			->getManager();
+		return $em
+			->getRepository('BrauneDigitalMailBundle:MailTemplate')
+			->findOneByLayout($layout);
+	}
+
+	/**
+	 * @param Mail $object
+	 *
+	 * @return bool
+	 */
 	public function handle(Mail $object) {
 
 		$mailer = $this->container->get('mailer');
@@ -34,7 +64,7 @@ class MailService implements MailerInterface
         $template = $object->getTemplate();
 
         //try to use the request locale if none was set
-        if($this->config['message']['use_request_locale'] && $object->getLocale() == null) {
+        if((!isset($this->config['message']) || $this->config['message']['use_request_locale']) && $object->getLocale() == null) {
             $object->setLocale($this->getCurrentLocale());
         }
 
@@ -132,8 +162,8 @@ class MailService implements MailerInterface
 	 *
 	 * @return void
 	 */
-	public function sendConfirmationEmailMessage(UserInterface $user) {
-        $this->sendUserMail($user, $this->layouts['confirm']);
+	public function sendConfirmationEmailMessage(UserInterface $user, $layout = 'confirm') {
+        $this->sendUserMail($user, $layout);
 	}
 
 	/**
@@ -143,8 +173,8 @@ class MailService implements MailerInterface
 	 *
 	 * @return void
 	 */
-	public function sendResettingEmailMessage(UserInterface $user) {
-		$this->sendUserMail($user, $this->layouts['password_reset']);
+	public function sendResettingEmailMessage(UserInterface $user, $layout = 'password_reset') {
+		$this->sendUserMail($user, $layout);
 	}
 
     /**
@@ -154,18 +184,16 @@ class MailService implements MailerInterface
      * @param null $locale
      */
     protected function sendUserMail(UserInterface $user, $layout, $locale = null) {
-        $em = $this->container
-            ->get('doctrine')
-            ->getManager();
-        $template = $em
-            ->getRepository('BrauneDigitalMailBundle:MailTemplate')
-            ->findOneBy(array('layout' => $layout));
+        $template = $this->getTemplate($layout);
+		$em = $this->container
+			->get('doctrine')
+			->getManager();
         if ($template) {
             $mail = new UserMail();
             $mail->setTemplate($template);
             $mail->setObject($user);
 
-            if ($this->config['message']['use_request_locale']) {
+            if (!isset($this->config['message']) || $this->config['message']['use_request_locale']) {
                 $mail->setLocale($this->getCurrentLocale());
             }
 

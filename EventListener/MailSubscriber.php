@@ -56,8 +56,6 @@ class MailSubscriber implements EventSubscriber
 
 			if (in_array($eventType, $entityConfig['events'])) {
 
-
-
 				$entityIsTranslation = false;
 				if ($entityConfig['check_translation']) {
 					$entityIsTranslation = (ClassUtils::getClass($this->entity) == $className . 'Translation') ? true : false;

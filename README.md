@@ -98,19 +98,18 @@ In order to send mails one has to get the template by entering the layout path a
 ```php
 $layout = 'emails/confirm.html.twig';
 $mailService = $this->get('braunedigital.mail.service.mail');
-$template = $this->getDoctrine()->getRepository('BrauneDigital\MailBundle\Entity\MailTemplate')->findOneBy(array(
-    'layout' => $layout
-));
+$template = $mailService->getTemplate($layout);
 
 if ($template) {
     $mail = new UserMail();
-    $mail->setStatus(UserMail::STATUS_WAITING_FOR_SENDING);
     $mail->setTemplate($template);
     $mail->setObject($user);
     $mail->setObject2(null);
+    //send the mail directly
+    $mailService->handle($mail);
+    //or store it for later sending
     $em->persist($mail);
     $em->flush();
-    $mailService->handle($mail);
 }
 ```
 The template will now be rendered and the user is available as `object` in the template.
@@ -120,18 +119,20 @@ Or for user independent mails:
 ```php
 $layout = 'emails/static_mail.html.twig';
 $mailService = $this->get('braunedigital.mail.service.mail');
-$template = $this->getDoctrine()->getRepository('BrauneDigital\MailBundle\Entity\MailTemplate')->findOneBy(array(
-    'layout' => $layout
-));
+$template = $mailService->getTemplate($layout);
 
 if ($template) {
     $mail = new Mail();
-    $mail->setStatus(UserMail::STATUS_WAITING_FOR_SENDING);
     $mail->setTemplate($template);
     $mail->setRecipient($email);
     $mail->setLocale('en');
+    //send the mail directly
+    $mailService->handle($mail);
+    //or store it for later sending
     $em->persist($mail);
     $em->flush();
-    $mailService->handle($mail);
 }
 ```
+
+## SendMailQueueCommand
+In order to send mails that have not been handled immediately, the command braunedigital:mails:send has to be executed!

@@ -7,7 +7,7 @@ parameters:
 
 services:
     sonata.admin.braunedigital.mail.mail:
-        class: 'BrauneDigital\MailBundle\Admin\MailAdmin'
+        class: '%braunedigital.mail.admin.mail.class%'
         tags:
             - { name: sonata.admin, manager_type: orm, group: "Mails", label: "Mails" }
         arguments:

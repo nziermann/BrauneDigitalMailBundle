@@ -24,6 +24,8 @@ class BrauneDigitalMailExtension extends Extension implements PrependExtensionIn
 		$config = $this->processConfiguration($configuration, $configs);
 		$container->setParameter('braune_digital_mail', $config);
 
+        $container->setParameter('braunedigital.mail.service.layouts', $config['layouts'] ? $config['layouts'] : array());
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
