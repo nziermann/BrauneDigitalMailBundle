@@ -3,13 +3,16 @@
 
 namespace BrauneDigital\MailBundle\Admin;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use BrauneDigital\MailBundle\Service\TemplateSearcherInterface;
 use BrauneDigital\TranslationBaseBundle\Admin\TranslationAdmin;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class MailTemplateAdmin extends TranslationAdmin
 {
@@ -51,27 +54,27 @@ class MailTemplateAdmin extends TranslationAdmin
 
         $formMapper
             ->add('title')
-			->add('translations', 'a2lix_translations', array(
+			->add('translations', TranslationsType::class, array(
 				'locales' => $this->currentLocale,
 				'required_locales' => $this->currentLocale,
 				'fields' => array(
                     'senderName' => array(
-                        'field_type' => 'text',
+                        'field_type' => TextType::class,
                         'label' => 'Sender Name',
                         'empty_data' => '',
                     ),
                     'senderMail' => array(
-                        'field_type' => 'text',
+                        'field_type' => TextType::class,
                         'label' => 'Sender Mail',
                         'empty_data' => '',
                     ),
 					'subject' => array(
-						'field_type' => 'text',
+						'field_type' => TextType::class,
 						'label' => 'Subject',
 						'empty_data' => '',
 					),
 					'body' => array(
-						'field_type' => 'ckeditor',
+						'field_type' => CKEditorType::class,
 						'label' => 'Description',
 						'empty_data' => '',
 						'required' => false,

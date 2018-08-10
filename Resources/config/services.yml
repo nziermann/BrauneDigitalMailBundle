@@ -1,7 +1,7 @@
 parameters:
     braunedigital.mail.service.layouts.password_reset: ApplicationAppBundle:Mail:Resetting/resetPassword.html.twig
     braunedigital.mail.service.layouts.confirm: ApplicationAppBundle:Mail:Registration/confirm.html.twig
-    braunedigital.mail.service.template_searcher.class: BrauneDigital\MailBundle\Service\TemplateSearcher
+    braunedigital.mail.service.template_searcher.class: 'BrauneDigital\MailBundle\Service\TemplateSearcher'
     braunedigital.mail.service.template_searcher.filter: "*.html.twig"
     braunedigital.mail.service.template_searcher.base_dir: "Resources/views"
     braunedigital.mail.service.mail.class: BrauneDigital\MailBundle\Service\MailService

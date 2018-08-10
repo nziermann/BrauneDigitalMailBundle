@@ -16,13 +16,13 @@ class MailAdmin extends Admin
     {
         $formMapper
             ->add('status', null, array(
-				'read_only' => true
+				'attr' => array('read_only' => true)
 			))
             ->add('template', null, array(
-				'read_only' => true
+                'attr' => array('read_only' => true)
 			))
             ->add('response', null, array(
-				'read_only' => true
+                'attr' => array('read_only' => true)
 			))
         ;
     }

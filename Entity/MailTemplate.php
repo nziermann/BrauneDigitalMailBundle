@@ -118,7 +118,7 @@ class MailTemplate
 	}
 
 	public function __toString() {
-		return $this->getTitle();
+		return ($this->getTitle() !== null) ? $this->getTitle() : '';
 	}
 
 	/**
